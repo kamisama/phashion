@@ -40,7 +40,7 @@ Dir.chdir(HERE) do
     system("cp -f libpHash.a libpHash_gem.a")
     system("cp -f libpHash.la libpHash_gem.la")
   end
-  $LIBS = " -lpthread -lpHash_gem -lstdc++ -ljpeg -lpng"
+  $LIBS = " -pthread -lpHash_gem -lstdc++ -ljpeg -lpng"
   $LIBS += " -lm" unless ENV['RAILS_ENV'] == 'development'
 end
 
