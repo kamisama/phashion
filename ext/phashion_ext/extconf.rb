@@ -9,7 +9,7 @@ $libraries = " -L#{HERE}/lib -L/usr/local/lib"
 $LIBPATH = ["#{HERE}/lib"]
 $CFLAGS = "#{$includes} #{$libraries} #{$CFLAGS}"
 $LDFLAGS = "#{$libraries} #{$LDFLAGS}"
-$CXXFLAGS = ' -pthread'  
+$CXXFLAGS = ' -pthread'
 
 Dir.chdir(HERE) do
   if File.exist?("lib")
@@ -40,7 +40,9 @@ Dir.chdir(HERE) do
     system("cp -f libpHash.a libpHash_gem.a")
     system("cp -f libpHash.la libpHash_gem.la")
   end
-  $LIBS = " -lpthread -lpHash_gem -lstdc++ -ljpeg -lpng"
+  $LIBS = " -lpHash_gem -lstdc++ -ljpeg -lpng"
+  $LIBS += ENV['RAILS_ENV'] == 'developement' ? " -lpthread" : " -pthread"
+  $LIBS += " -lm" unless ENV['RAILS_ENV'] == 'development'
 end
 
 have_header 'sqlite3ext.h'
